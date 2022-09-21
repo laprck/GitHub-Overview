@@ -5,12 +5,25 @@ on:
 
 jobs:
   firstjob:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: firstJob script
-        shell: cmd
+        shell: bash
         run: echo Hello World! This is the first job
         
+      - name: Checkout
+        uses: actions/checkout@v3     
+        
+      - name: greetings
+        id: greetings
+        uses: actions/hello-world-javascript-action@main
+        with:
+          who-to-greet: 'Edith of Otterfing'
+      
+      - name: time
+        run: |
+          echo "The time of greeing was at: ${{step.greetings.outputs.time}}"
+          
   secondjob:
     runs-on: ubuntu-latest
     steps:
